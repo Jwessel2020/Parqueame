@@ -1,0 +1,3 @@
+Flask==2.3.2
+
+# in TERMINAL run: pip install -r requirements.txt

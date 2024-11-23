@@ -1,0 +1,20 @@
+<!-- templates/bookings.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Your Bookings</h1>
+{% if bookings %}
+    <ul>
+        {% for booking in bookings %}
+            <li>
+                <h2>{{ booking.parking_spot_name }}</h2>
+                <p>Date: {{ booking.date }}</p>
+                <p>Time: {{ booking.time }}</p>
+                <p>Duration: {{ booking.duration }} hour(s)</p>
+                <p>Total Price: ${{ booking.total_price }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no bookings.</p>
+{% endif %}
+{% endblock %}

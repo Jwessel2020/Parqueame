@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "parking_spot_id": 2,
+        "parking_spot_name": "City Center Garage",
+        "date": "2022-03-30",
+        "time": "10:00",
+        "duration": 2,
+        "total_price": 14
+    }
+]

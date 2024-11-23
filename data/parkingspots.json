@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Downtown Parking Lot",
+        "address": "123 Main St",
+        "pricePerHour": 5,
+        "available": true
+    },
+    {
+        "id": 2,
+        "name": "City Center Garage",
+        "address": "456 Elm St",
+        "pricePerHour": 7,
+        "available": true
+    },
+    {
+        "id": 3,
+        "name": "Uptown Parking",
+        "address": "789 Oak St",
+        "pricePerHour": 6,
+        "available": true
+    }
+]

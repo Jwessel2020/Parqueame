@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "make": "Toyota",
+        "model": "Camry",
+        "license_plate": "ABC123"
+    }
+]

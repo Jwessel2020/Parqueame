@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<!-- templates/search.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Search for Parking Spots</h1>
+<form method="post">
+    <input type="text" name="location" placeholder="Where would you like to park?" value="{{ request.form.location }}">
+    <input type="date" name="date" value="{{ request.form.date }}">
+    <input type="time" name="time" value="{{ request.form.time }}">
+    <button type="submit">Search</button>
+</form>
+<ul>
+    {% for spot in parking_spots %}
+        <li>
+            <h2>{{ spot.name }}</h2>
+            <p>{{ spot.address }}</p>
+            <p>Price per hour: ${{ spot.pricePerHour }}</p>
+            <p>Availability: {{ 'Available' if spot.available else 'Not Available' }}</p>
+            <a href="{{ url_for('reserve', spot_id=spot.id) }}">Reserve</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
