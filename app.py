@@ -1,15 +1,19 @@
 # app.py
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from utils import data_handler, auth
-import os
+from models.user import User
+from models.parking_spot import ParkingSpot
+from models.booking import Booking
+from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = 'your_secret_key'
 
 # Home Route
 @app.route('/')
 def home():
     return redirect(url_for('search'))
+
 
 # Search Route
 @app.route('/search', methods=['GET', 'POST'])
@@ -17,51 +21,91 @@ def search():
     if request.method == 'POST':
         filters = {
             'location': request.form.get('location'),
-            'date': request.form.get('date'),
-            'time': request.form.get('time'),
+            'start_datetime': request.form.get('start_datetime'),
+            'end_datetime': request.form.get('end_datetime'),
         }
         parking_spots = data_handler.get_parking_spots(filters)
     else:
         parking_spots = data_handler.get_all_parking_spots()
-    return render_template('search.html', parking_spots=parking_spots)
+
+    # Get user's favorites if logged in
+    user_favorites = []
+    if 'user_id' in session:
+        user = data_handler.get_user_by_id(session.get('user_id'))
+        user_favorites = user.favorites
+    else:
+        user = None
+
+    return render_template('search.html', parking_spots=parking_spots, user=user, user_favorites=user_favorites)
+
 
 # Reserve Parking Spot
 @app.route('/reserve/<int:spot_id>', methods=['GET', 'POST'])
 @auth.login_required
 def reserve(spot_id):
+    parking_spot = data_handler.get_parking_spot_by_id(spot_id)
     if request.method == 'POST':
-        user_id = session.get('user_id')
-        date = request.form.get('date')
-        time = request.form.get('time')
-        duration = request.form.get('duration')
-        data_handler.create_booking(user_id, spot_id, date, time, duration)
+        user = data_handler.get_user_by_id(session.get('user_id'))
+        start_datetime_str = request.form.get('start_datetime')
+        end_datetime_str = request.form.get('end_datetime')
+
+        # Convert strings to datetime objects
+        start_datetime = datetime.fromisoformat(start_datetime_str)
+        end_datetime = datetime.fromisoformat(end_datetime_str)
+
+        # Validate that end time is after start time
+        if end_datetime <= start_datetime:
+            flash('End time must be after start time.')
+            return redirect(url_for('reserve', spot_id=spot_id))
+
+        # Check availability
+        bookings = data_handler.load_bookings()
+        if not parking_spot.is_available(start_datetime, end_datetime, bookings):
+            flash('Parking spot is not available during the selected time.')
+            return redirect(url_for('reserve', spot_id=spot_id))
+
+        # Calculate total price
+        duration_hours = (end_datetime - start_datetime).total_seconds() / 3600
+        total_price = parking_spot.price_per_hour * duration_hours
+
+        booking = Booking(
+            id=data_handler.get_next_booking_id(),
+            user_id=user.id,
+            parking_spot_id=parking_spot.id,
+            parking_spot_name=parking_spot.name,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
+            total_price=total_price
+        )
+        data_handler.create_booking(booking)
         flash('Reservation successful!')
         return redirect(url_for('bookings'))
-    parking_spot = data_handler.get_parking_spot_by_id(spot_id)
+
     return render_template('reserve.html', parking_spot=parking_spot)
 
 # Bookings Route
 @app.route('/bookings')
 @auth.login_required
 def bookings():
-    user_id = session.get('user_id')
-    user_bookings = data_handler.get_user_bookings(user_id)
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    user_bookings = data_handler.get_user_bookings(user.id)
     return render_template('bookings.html', bookings=user_bookings)
 
 # Favorites Route
 @app.route('/favorites')
 @auth.login_required
 def favorites():
-    user_id = session.get('user_id')
-    favorite_spots = data_handler.get_user_favorites(user_id)
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    favorite_spots = data_handler.get_user_favorites(user)
     return render_template('favorites.html', favorites=favorite_spots)
 
 # Add to Favorites
 @app.route('/add_favorite/<int:spot_id>')
 @auth.login_required
 def add_favorite(spot_id):
-    user_id = session.get('user_id')
-    data_handler.add_favorite(user_id, spot_id)
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    user.add_favorite(spot_id)
+    data_handler.update_user(user)
     flash('Added to favorites!')
     return redirect(url_for('favorites'))
 
@@ -69,8 +113,9 @@ def add_favorite(spot_id):
 @app.route('/remove_favorite/<int:spot_id>')
 @auth.login_required
 def remove_favorite(spot_id):
-    user_id = session.get('user_id')
-    data_handler.remove_favorite(user_id, spot_id)
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    user.remove_favorite(spot_id)
+    data_handler.update_user(user)
     flash('Removed from favorites!')
     return redirect(url_for('favorites'))
 
@@ -78,19 +123,18 @@ def remove_favorite(spot_id):
 @app.route('/account', methods=['GET', 'POST'])
 @auth.login_required
 def account():
-    user_id = session.get('user_id')
+    user = data_handler.get_user_by_id(session.get('user_id'))
     if request.method == 'POST':
         # Update user information
-        updated_info = {
-            'name': request.form.get('name'),
-            'email': request.form.get('email'),
-            'phone': request.form.get('phone'),
-        }
-        data_handler.update_user_info(user_id, updated_info)
+        user.update_info(
+            name=request.form.get('name'),
+            email=request.form.get('email'),
+            phone=request.form.get('phone')
+        )
+        data_handler.update_user(user)
         flash('Account information updated!')
         return redirect(url_for('account'))
-    user_info = data_handler.get_user_info(user_id)
-    return render_template('account.html', user=user_info)
+    return render_template('account.html', user=user)
 
 # Information Route
 @app.route('/information')
@@ -103,7 +147,7 @@ def login():
     if request.method == 'POST':
         user = auth.authenticate(request.form['username'], request.form['password'])
         if user:
-            session['user_id'] = user['id']
+            session['user_id'] = user.id
             flash('Login successful!')
             return redirect(url_for('search'))
         else:

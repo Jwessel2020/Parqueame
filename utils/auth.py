@@ -1,7 +1,7 @@
 # utils/auth.py
 from functools import wraps
 from flask import session, redirect, url_for
-from .data_handler import load_data
+from .data_handler import load_users
 
 def login_required(f):
     @wraps(f)
@@ -12,6 +12,8 @@ def login_required(f):
     return decorated_function
 
 def authenticate(username, password):
-    users = load_data('users.json')
-    user = next((user for user in users if user['username'] == username and user['password'] == password), None)
-    return user
+    users = load_users()
+    user = next((u for u in users if u.username == username), None)
+    if user and user.authenticate(password):
+        return user
+    return None

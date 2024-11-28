@@ -8,7 +8,7 @@
             <li>
                 <h2>{{ spot.name }}</h2>
                 <p>{{ spot.address }}</p>
-                <p>Price per hour: ${{ spot.pricePerHour }}</p>
+                <p>Price per hour: ${{ spot.price_per_hour }}</p>
                 <a href="{{ url_for('remove_favorite', spot_id=spot.id) }}">Remove from Favorites</a>
             </li>
         {% endfor %}

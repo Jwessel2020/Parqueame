@@ -4,8 +4,10 @@
 <h1>Search for Parking Spots</h1>
 <form method="post">
     <input type="text" name="location" placeholder="Where would you like to park?" value="{{ request.form.location }}">
-    <input type="date" name="date" value="{{ request.form.date }}">
-    <input type="time" name="time" value="{{ request.form.time }}">
+    <label for="start_datetime">Start Date and Time:</label>
+    <input type="datetime-local" name="start_datetime" value="{{ request.form.start_datetime }}">
+    <label for="end_datetime">End Date and Time:</label>
+    <input type="datetime-local" name="end_datetime" value="{{ request.form.end_datetime }}">
     <button type="submit">Search</button>
 </form>
 <ul>
@@ -13,9 +15,17 @@
         <li>
             <h2>{{ spot.name }}</h2>
             <p>{{ spot.address }}</p>
-            <p>Price per hour: ${{ spot.pricePerHour }}</p>
-            <p>Availability: {{ 'Available' if spot.available else 'Not Available' }}</p>
-            <a href="{{ url_for('reserve', spot_id=spot.id) }}">Reserve</a>
+            <p>Price per hour: ${{ spot.price_per_hour }}</p>
+            {% if user %}
+                <a href="{{ url_for('reserve', spot_id=spot.id) }}">Reserve</a>
+                {% if spot.id in user_favorites %}
+                    <a href="{{ url_for('remove_favorite', spot_id=spot.id) }}">Remove from Favorites</a>
+                {% else %}
+                    <a href="{{ url_for('add_favorite', spot_id=spot.id) }}">Add to Favorites</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('login') }}">Login to Reserve</a>
+            {% endif %}
         </li>
     {% endfor %}
 </ul>

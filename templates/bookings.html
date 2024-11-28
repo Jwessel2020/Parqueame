@@ -7,10 +7,9 @@
         {% for booking in bookings %}
             <li>
                 <h2>{{ booking.parking_spot_name }}</h2>
-                <p>Date: {{ booking.date }}</p>
-                <p>Time: {{ booking.time }}</p>
-                <p>Duration: {{ booking.duration }} hour(s)</p>
-                <p>Total Price: ${{ booking.total_price }}</p>
+                <p>Start: {{ booking.start_datetime.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p>End: {{ booking.end_datetime.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p>Total Price: ${{ booking.total_price | round(2) }}</p>
             </li>
         {% endfor %}
     </ul>

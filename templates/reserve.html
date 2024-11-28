@@ -1,0 +1,15 @@
+<!-- templates/reserve.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Reserve Parking Spot</h1>
+<h2>{{ parking_spot.name }}</h2>
+<p>{{ parking_spot.address }}</p>
+<p>Price per hour: ${{ parking_spot.price_per_hour }}</p>
+<form method="post">
+    <label for="start_datetime">Start Date and Time:</label>
+    <input type="datetime-local" name="start_datetime" required>
+    <label for="end_datetime">End Date and Time:</label>
+    <input type="datetime-local" name="end_datetime" required>
+    <button type="submit">Confirm Reservation</button>
+</form>
+{% endblock %}

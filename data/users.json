@@ -7,6 +7,6 @@
         "email": "john@example.com",
         "phone": "555-1234",
         "favorites": [1],
-        "vehicles": [1]
+        "vehicles": []
     }
 ]
