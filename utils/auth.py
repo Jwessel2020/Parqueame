@@ -16,4 +16,4 @@ def authenticate(username, password):
     user = next((u for u in users if u.username == username), None)
     if user and user.authenticate(password):
         return user
-    return None
+    return Nonet

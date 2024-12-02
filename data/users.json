@@ -6,7 +6,16 @@
         "name": "John Doe",
         "email": "john@example.com",
         "phone": "555-1234",
-        "favorites": [1],
-        "vehicles": []
+        "favorites": [
+            1
+        ],
+        "vehicles": [
+            {
+                "id": 2,
+                "make": "asd",
+                "model": "asd",
+                "license_plate": "asd"
+            }
+        ]
     }
 ]

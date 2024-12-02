@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="846bc1d0-4be2-4b05-830e-9a84de781a56" name="Changes" comment="Structure_v2">
-      <change afterPath="$PROJECT_DIR$/models/booking.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/parking_spot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Parqueame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Parqueame.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="846bc1d0-4be2-4b05-830e-9a84de781a56" name="Changes" comment="Structure_v3">
+      <change afterPath="$PROJECT_DIR$/templates/add_vehicle.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/bookings.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/bookings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/bookings.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bookings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/favorites.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/favorites.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/data_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/data_handler.py" afterDir="false" />
     </list>
@@ -29,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -45,6 +39,18 @@
       </map>
     </option>
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Jwessel2020&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Jwessel2020/Parqueame.git&quot;,
+    &quot;accountId&quot;: &quot;ff7fbd19-9850-4f3c-a9c4-35947150e096&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -112,7 +118,11 @@
       <workItem from="1732718496480" duration="5867000" />
       <workItem from="1732799280015" duration="1054000" />
       <workItem from="1732800358578" duration="1946000" />
-      <workItem from="1732802358864" duration="1072000" />
+      <workItem from="1732802358864" duration="4265000" />
+      <workItem from="1733145167137" duration="559000" />
+      <workItem from="1733149521979" duration="4332000" />
+      <workItem from="1733153975157" duration="171000" />
+      <workItem from="1733154165506" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Structure_v1">
       <option name="closed" value="true" />
@@ -130,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732391523107</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Structure_v2">
+      <option name="closed" value="true" />
+      <created>1732803505308</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732803505309</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,5 +158,16 @@
     <MESSAGE value="Structure_v1" />
     <MESSAGE value="Structure_v2" />
     <option name="LAST_COMMIT_MESSAGE" value="Structure_v2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/data_handler.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

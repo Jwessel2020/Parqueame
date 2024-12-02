@@ -1,0 +1,14 @@
+<!-- templates/add_vehicle.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Add a New Vehicle</h1>
+<form method="post">
+    <label for="make">Make:</label>
+    <input type="text" name="make" required>
+    <label for="model">Model:</label>
+    <input type="text" name="model" required>
+    <label for="license_plate">License Plate:</label>
+    <input type="text" name="license_plate" required>
+    <button type="submit">Add Vehicle</button>
+</form>
+{% endblock %}

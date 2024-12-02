@@ -1,4 +1,5 @@
 # app.py
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from utils import data_handler, auth
 from models.user import User
@@ -8,6 +9,9 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+# Existing routes...
+
 
 # Home Route
 @app.route('/')
@@ -37,6 +41,40 @@ def search():
         user = None
 
     return render_template('search.html', parking_spots=parking_spots, user=user, user_favorites=user_favorites)
+
+# app.py
+
+@app.route('/add_vehicle', methods=['GET', 'POST'])
+@auth.login_required
+def add_vehicle():
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    if request.method == 'POST':
+        make = request.form.get('make')
+        model = request.form.get('model')
+        license_plate = request.form.get('license_plate')
+        vehicle_id = data_handler.get_next_vehicle_id(user)
+        vehicle = {
+            'id': vehicle_id,
+            'make': make,
+            'model': model,
+            'license_plate': license_plate
+        }
+        user.add_vehicle(vehicle)
+        data_handler.update_user(user)
+        flash('Vehicle added successfully!')
+        return redirect(url_for('account'))
+    return render_template('add_vehicle.html')
+
+# app.py
+
+@app.route('/remove_vehicle/<int:vehicle_id>', methods=['POST'])
+@auth.login_required
+def remove_vehicle(vehicle_id):
+    user = data_handler.get_user_by_id(session.get('user_id'))
+    user.remove_vehicle(vehicle_id)
+    data_handler.update_user(user)
+    flash('Vehicle removed successfully!')
+    return redirect(url_for('account'))
 
 
 # Reserve Parking Spot
@@ -119,7 +157,6 @@ def remove_favorite(spot_id):
     flash('Removed from favorites!')
     return redirect(url_for('favorites'))
 
-# Account Route
 @app.route('/account', methods=['GET', 'POST'])
 @auth.login_required
 def account():
@@ -135,6 +172,7 @@ def account():
         flash('Account information updated!')
         return redirect(url_for('account'))
     return render_template('account.html', user=user)
+
 
 # Information Route
 @app.route('/information')

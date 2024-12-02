@@ -11,4 +11,20 @@
     <input type="text" name="phone" value="{{ user.phone }}" required>
     <button type="submit">Update Information</button>
 </form>
+
+<h2>Your Vehicles</h2>
+<ul>
+    {% for vehicle in user.vehicles %}
+        <li>
+            {{ vehicle.make }} {{ vehicle.model }} - {{ vehicle.license_plate }}
+            <form method="post" action="{{ url_for('remove_vehicle', vehicle_id=vehicle.id) }}" style="display:inline;">
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+<!-- Add button to add vehicles -->
+<a href="{{ url_for('add_vehicle') }}" class="button">Add Vehicle</a>
+
 {% endblock %}

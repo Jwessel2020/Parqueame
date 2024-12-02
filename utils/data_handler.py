@@ -1,4 +1,5 @@
 # utils/data_handler.py
+
 import json
 import os
 from models.user import User
@@ -16,6 +17,7 @@ def save_data(file_name, data):
     with open(os.path.join(DATA_DIR, file_name), 'w') as f:
         json.dump(data, f, indent=4)
 
+# **Update the load_users function to include vehicles**
 def load_users():
     data = load_data('users.json')
     users = []
@@ -28,10 +30,41 @@ def load_users():
             email=item['email'],
             phone=item['phone'],
             favorites=item.get('favorites', []),
-            vehicles=item.get('vehicles', [])
+            vehicles=item.get('vehicles', [])  # Load vehicles from user data
         )
         users.append(user)
     return users
+
+# **Add a new function to save users**
+def save_users(users):
+    data = [user_to_dict(u) for u in users]
+    save_data('users.json', data)
+
+# **Update user_to_dict function to include vehicles**
+def user_to_dict(user):
+    return {
+        'id': user.id,
+        'username': user.username,
+        'password': user.password,
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phone,
+        'favorites': user.favorites,
+        'vehicles': user.vehicles  # Include vehicles when saving
+    }
+
+def get_user_by_id(user_id):
+    users = load_users()
+    return next((user for user in users if user.id == user_id), None)
+
+# **Update the update_user function to use save_users**
+def update_user(user):
+    users = load_users()
+    for idx, u in enumerate(users):
+        if u.id == user.id:
+            users[idx] = user
+            break
+    save_users(users)
 
 def load_parking_spots():
     data = load_data('parkingspots.json')
@@ -46,22 +79,6 @@ def load_parking_spots():
         )
         spots.append(spot)
     return spots
-
-def load_bookings():
-    data = load_data('bookings.json')
-    bookings = []
-    for item in data:
-        booking = Booking(
-            id=item['id'],
-            user_id=item['user_id'],
-            parking_spot_id=item['parking_spot_id'],
-            parking_spot_name=item['parking_spot_name'],
-            start_datetime=datetime.fromisoformat(item['start_datetime']),
-            end_datetime=datetime.fromisoformat(item['end_datetime']),
-            total_price=item['total_price']
-        )
-        bookings.append(booking)
-    return bookings
 
 def get_all_parking_spots():
     return load_parking_spots()
@@ -88,10 +105,6 @@ def get_parking_spot_by_id(spot_id):
     spots = load_parking_spots()
     return next((spot for spot in spots if spot.id == spot_id), None)
 
-def get_user_by_id(user_id):
-    users = load_users()
-    return next((user for user in users if user.id == user_id), None)
-
 def get_user_bookings(user_id):
     bookings = load_bookings()
     return [booking for booking in bookings if booking.user_id == user_id]
@@ -107,6 +120,7 @@ def create_booking(booking):
     data = [booking_to_dict(b) for b in bookings]
     save_data('bookings.json', data)
 
+# **Update booking_to_dict to include vehicle_info**
 def booking_to_dict(booking):
     return {
         'id': booking.id,
@@ -115,35 +129,39 @@ def booking_to_dict(booking):
         'parking_spot_name': booking.parking_spot_name,
         'start_datetime': booking.start_datetime.isoformat(),
         'end_datetime': booking.end_datetime.isoformat(),
-        'total_price': booking.total_price
+        'total_price': booking.total_price,
+        'vehicle_id': booking.vehicle_id,
+        'vehicle_info': booking.vehicle_info  # Include vehicle info
     }
+
+# **Update load_bookings to load vehicle_info**
+def load_bookings():
+    data = load_data('bookings.json')
+    bookings = []
+    for item in data:
+        booking = Booking(
+            id=item['id'],
+            user_id=item['user_id'],
+            parking_spot_id=item['parking_spot_id'],
+            parking_spot_name=item['parking_spot_name'],
+            start_datetime=datetime.fromisoformat(item['start_datetime']),
+            end_datetime=datetime.fromisoformat(item['end_datetime']),
+            total_price=item['total_price'],
+            vehicle_id=item['vehicle_id'],
+            vehicle_info=item['vehicle_info']  # Load vehicle info
+        )
+        bookings.append(booking)
+    return bookings
 
 def get_user_info(user_id):
     return get_user_by_id(user_id)
-
-def update_user(user):
-    users = load_users()
-    for idx, u in enumerate(users):
-        if u.id == user.id:
-            users[idx] = user
-            break
-    # Convert users to dicts before saving
-    data = [user_to_dict(u) for u in users]
-    save_data('users.json', data)
-
-def user_to_dict(user):
-    return {
-        'id': user.id,
-        'username': user.username,
-        'password': user.password,
-        'name': user.name,
-        'email': user.email,
-        'phone': user.phone,
-        'favorites': user.favorites,
-        'vehicles': user.vehicles
-    }
 
 def get_user_favorites(user):
     spots = load_parking_spots()
     favorite_spots = [spot for spot in spots if spot.id in user.favorites]
     return favorite_spots
+
+# **Add function to generate next vehicle ID**
+def get_next_vehicle_id(user):
+    vehicle_ids = [v['id'] for v in user.vehicles]
+    return max(vehicle_ids, default=0) + 1
