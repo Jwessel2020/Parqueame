@@ -7,6 +7,11 @@
         {% for booking in bookings %}
             <li>
                 <h2>{{ booking.parking_spot_name }}</h2>
+                {% if booking.vehicle_info %}
+                    <p>Vehicle: {{ booking.vehicle_info.make }} {{ booking.vehicle_info.model }} - {{ booking.vehicle_info.license_plate }}</p>
+                {% else %}
+                    <p>Vehicle: N/A</p>
+                {% endif %}
                 <p>Start: {{ booking.start_datetime.strftime('%Y-%m-%d %H:%M') }}</p>
                 <p>End: {{ booking.end_datetime.strftime('%Y-%m-%d %H:%M') }}</p>
                 <p>Total Price: ${{ booking.total_price | round(2) }}</p>

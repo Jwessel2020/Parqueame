@@ -131,10 +131,10 @@ def booking_to_dict(booking):
         'end_datetime': booking.end_datetime.isoformat(),
         'total_price': booking.total_price,
         'vehicle_id': booking.vehicle_id,
-        'vehicle_info': booking.vehicle_info  # Include vehicle info
+        'vehicle_info': booking.vehicle_info
     }
 
-# **Update load_bookings to load vehicle_info**
+
 def load_bookings():
     data = load_data('bookings.json')
     bookings = []
@@ -147,11 +147,12 @@ def load_bookings():
             start_datetime=datetime.fromisoformat(item['start_datetime']),
             end_datetime=datetime.fromisoformat(item['end_datetime']),
             total_price=item['total_price'],
-            vehicle_id=item['vehicle_id'],
-            vehicle_info=item['vehicle_info']  # Load vehicle info
+            vehicle_id=item.get('vehicle_id'),  # Use get() method
+            vehicle_info=item.get('vehicle_info')  # Use get() method
         )
         bookings.append(booking)
     return bookings
+
 
 def get_user_info(user_id):
     return get_user_by_id(user_id)

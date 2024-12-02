@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="846bc1d0-4be2-4b05-830e-9a84de781a56" name="Changes" comment="Structure_v3">
-      <change afterPath="$PROJECT_DIR$/templates/add_vehicle.html" afterDir="false" />
+    <list default="true" id="846bc1d0-4be2-4b05-830e-9a84de781a56" name="Changes" comment="Structure_v4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/bookings.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/bookings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/booking.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/booking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/bookings.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bookings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/data_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/data_handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +119,8 @@
       <workItem from="1733145167137" duration="559000" />
       <workItem from="1733149521979" duration="4332000" />
       <workItem from="1733153975157" duration="171000" />
-      <workItem from="1733154165506" duration="2000" />
+      <workItem from="1733154165506" duration="723000" />
+      <workItem from="1733155237538" duration="66000" />
     </task>
     <task id="LOCAL-00001" summary="Structure_v1">
       <option name="closed" value="true" />
@@ -148,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732803505309</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Structure_v4">
+      <option name="closed" value="true" />
+      <created>1733154262136</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733154262136</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,7 +163,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Structure_v1" />
     <MESSAGE value="Structure_v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Structure_v2" />
+    <MESSAGE value="Structure_v4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Structure_v4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
